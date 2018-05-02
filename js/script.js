@@ -41,7 +41,12 @@ var bounds = new google.maps.LatLngBounds();
             markers.push(marker);
             // Create an onclick event to open an infowindow at each marker.
             marker.addListener('click', function() {
+                var myMarker = this; 
                 populateInfoWindow(this, largeInfowindow);
+                this.setAnimation(google.maps.Animation.BOUNCE);
+                setTimeout(function(){
+                    myMarker.setAnimation(null);
+                },1300);
             });
             bounds.extend(markers[i].position);
         }
