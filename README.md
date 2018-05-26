@@ -41,7 +41,7 @@ SCREENSHOT
 
 
 ## More information
-A lot of research went into this project. Here ae the resources I used to come up with solutions to my various problems:
+A lot of research went into this project. Here are the resources that I used to come up with solutions to my various problems:
 * Inspiration on how to create markers: [Udacity Github project](https://github.com/udacity/ud864)
 * How to animate markers: [Google documentation](https://developers.google.com/maps/documentation/javascript/examples/marker-animations)
 

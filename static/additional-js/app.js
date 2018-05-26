@@ -11,9 +11,11 @@ function initMap() {
         zoom: 13
     });
 
+// Model 
+
 // These are the real estate listings that will be shown to the user.
 // Normally we'd have these in a database instead.
-var locations = [
+var onLoadLocations = [
     {title: 'Sydney Opera House', location: {lat: -33.856968, lng: 151.2127686}},
     {title: 'Powerhouse Museum', location: {lat: -33.8785135, lng: 151.1973531}},
     {title: 'Harbour Bridge', location: {lat: -33.8523018, lng: 151.2085984}},
@@ -21,14 +23,44 @@ var locations = [
     {title: 'Taronga Zoo', location: {lat: -33.8435428, lng: 151.2391531}}
 ];
 
+
+var Location = function(data){
+    this.title = ko.observable(data.title);
+}
+
+
+// View Model
+
+var ViewModel = function() {
+
+    // self will refer to the outer this, i.e. the view model
+    var self = this;
+
+    this.locationList = ko.observableArray([]);
+
+    onLoadLocations.forEach(function(locItem){
+        self.locationList.push(new Location(locItem));
+    });
+    
+    this.currentLoc = ko.observable(this.locationList()[0]);
+
+
+    this.setLoc = function(clickedLoc){
+        self.currentLoc(clickedLoc);
+    };
+}
+
+ko.applyBindings(new ViewModel());
+
+
 var largeInfowindow = new google.maps.InfoWindow();
 var bounds = new google.maps.LatLngBounds();
 
         // The following group uses the location array to create an array of markers on initialize.
-        for (var i = 0; i < locations.length; i++) {
+        for (var i = 0; i < onLoadLocations.length; i++) {
             // Get the position from the location array.
-            var position = locations[i].location;
-            var title = locations[i].title;
+            var position = onLoadLocations[i].location;
+            var title = onLoadLocations[i].title;
             // Create a marker per location, and put into markers array.
             var marker = new google.maps.Marker({
                 map: map,
