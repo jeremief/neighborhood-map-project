@@ -86,6 +86,45 @@ var bounds = new google.maps.LatLngBounds();
         map.fitBounds(bounds);
 }
 
+
+
+
+var searchedForText = "Sydney Opera House";
+const responseContainer = document.querySelector('#response-container');
+
+fetch(`https://api.unsplash.com/search/photos?page=1&query=${searchedForText}`, {
+    headers: {
+        Authorization: 'Client-ID 4f1bbee00a76cff5bcc600b39b6895819ad62cf89eed2147f567dc2cd681a21b'
+    }
+}).then(response => response.json())
+.then(addImage)
+.catch(e => requestError(e, 'image'));
+
+function addImage(data) {
+    let htmlContent = '';
+    const firstImage = data.results[0];
+
+    if (firstImage) {
+        htmlContent = `<figure>
+            <img src="${firstImage.urls.small}" alt="${searchedForText}">
+            <figcaption>${searchedForText} by ${firstImage.user.name}</figcaption>
+        </figure>`;
+    } else {
+        htmlContent = 'Unfortunately, no image was returned for your search.'
+    }
+
+    responseContainer.insertAdjacentHTML('afterbegin', htmlContent);
+}
+
+function requestError(e, part) {
+    console.log(e);
+    responseContainer.insertAdjacentHTML('beforeend', `<p class="network-warning">Oh no! There was an error making a request for the ${part}.</p>`);
+}             
+
+
+
+
+
 // This function populates the infowindow when the marker is clicked. We'll only allow
 // one infowindow which will open at the marker that is clicked, and populate based
 // on that markers position.
@@ -93,7 +132,7 @@ function populateInfoWindow(marker, infowindow) {
     // Check to make sure the infowindow is not already opened on this marker.
     if (infowindow.marker != marker) {
         infowindow.marker = marker;
-        infowindow.setContent('<div>' + marker.title + '</div>');
+        infowindow.setContent('<div>' + marker.title + '</div>' + '<img src="PleaseStandBy.jpg" class="ApiPicture">');
         infowindow.open(map, marker);
         // Make sure the marker property is cleared if the infowindow is closed.
         infowindow.addListener('closeclick',function(){
