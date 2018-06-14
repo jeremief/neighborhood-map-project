@@ -26,6 +26,7 @@ var onLoadLocations = [
 
 var Location = function(data){
     this.title = ko.observable(data.title);
+
 }
 
 
@@ -62,12 +63,65 @@ var bounds = new google.maps.LatLngBounds();
             var position = onLoadLocations[i].location;
             var title = onLoadLocations[i].title;
             // Create a marker per location, and put into markers array.
+
+
+            var searchedForText = title;
+            // console.log(this.title);
+
+            // console.log('this is the searched for text: ' + searchedForText);
+            // const responseContainer = document.querySelector('#response-container');
+
+            var apiPicture = {url:"https://images.unsplash.com/photo-1527915676329-fd5ec8a12d4b?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjIyNDQwfQ&s=153a3276e887a6f74a521bc62142bc17",
+                                author: "Me"};
+
+
+            function getPictureData(searchedForText) {
+
+
+                fetch(`https://api.unsplash.com/search/photos?page=1&query=${searchedForText}`, {
+                    headers: {
+                        Authorization: 'Client-ID 4f1bbee00a76cff5bcc600b39b6895819ad62cf89eed2147f567dc2cd681a21b'
+                    }
+                }).then(response => response.json())
+                .then(function(myJason){
+
+                    var pictureUrl = myJason.results[0].urls.small;
+                    var pictureAuthor = myJason.results[0].user.name;
+                    var pictureData = {url: pictureUrl, author: pictureAuthor};
+
+                    // console.log("pictureData: " + pictureData);
+
+                    return pictureData;
+
+
+                })
+                .then(getDataV2)
+                .catch(e => requestError(e, 'image'));
+
+            }
+
+
+            // console.log("Picture data" + getPictureData());
+
+            // var apiPicture =  getPictureData()
+            console.log("apiPicture: " + apiPicture);
+
+
+
+            function requestError(e, part) {
+                console.log(e);
+                // responseContainer.insertAdjacentHTML('beforeend', `<p class="network-warning">Oh no! There was an error making a request for the ${part}.</p>`);
+            }  
+
+
+
             var marker = new google.maps.Marker({
                 map: map,
                 position: position,
                 title: title,
                 animation: google.maps.Animation.DROP,
-                id: i
+                id: i,
+                pictureUrl: apiPicture.url
             });
             // Push the marker to our array of markers.
             markers.push(marker);
@@ -85,41 +139,7 @@ var bounds = new google.maps.LatLngBounds();
         // Extend the boundaries of the map for each marker
         map.fitBounds(bounds);
 }
-
-
-
-
-var searchedForText = "Sydney Opera House";
-const responseContainer = document.querySelector('#response-container');
-
-fetch(`https://api.unsplash.com/search/photos?page=1&query=${searchedForText}`, {
-    headers: {
-        Authorization: 'Client-ID 4f1bbee00a76cff5bcc600b39b6895819ad62cf89eed2147f567dc2cd681a21b'
-    }
-}).then(response => response.json())
-.then(addImage)
-.catch(e => requestError(e, 'image'));
-
-function addImage(data) {
-    let htmlContent = '';
-    const firstImage = data.results[0];
-
-    if (firstImage) {
-        htmlContent = `<figure>
-            <img src="${firstImage.urls.small}" alt="${searchedForText}">
-            <figcaption>${searchedForText} by ${firstImage.user.name}</figcaption>
-        </figure>`;
-    } else {
-        htmlContent = 'Unfortunately, no image was returned for your search.'
-    }
-
-    responseContainer.insertAdjacentHTML('afterbegin', htmlContent);
-}
-
-function requestError(e, part) {
-    console.log(e);
-    responseContainer.insertAdjacentHTML('beforeend', `<p class="network-warning">Oh no! There was an error making a request for the ${part}.</p>`);
-}             
+           
 
 
 
@@ -132,7 +152,10 @@ function populateInfoWindow(marker, infowindow) {
     // Check to make sure the infowindow is not already opened on this marker.
     if (infowindow.marker != marker) {
         infowindow.marker = marker;
-        infowindow.setContent('<div>' + marker.title + '</div>' + '<img src="PleaseStandBy.jpg" class="ApiPicture">');
+
+        // console.log(marker);
+
+        infowindow.setContent('<div>' + marker.title + '</div>' + '<img src="'+ marker.pictureUrl + '" class="ApiPicture">');
         infowindow.open(map, marker);
         // Make sure the marker property is cleared if the infowindow is closed.
         infowindow.addListener('closeclick',function(){
