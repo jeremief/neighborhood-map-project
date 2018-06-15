@@ -67,64 +67,55 @@ function initMap() {
 
         var searchedForText = title;
 
-        // var apiPicture = {url:"https://images.unsplash.com/photo-1527915676329-fd5ec8a12d4b?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjIyNDQwfQ&s=153a3276e887a6f74a521bc62142bc17",
-        //                     author: "Me"};
+        function makeMarker() {
+
+            console.log("Entering makeMarker")
+
+            var marker = new google.maps.Marker({
+                map: map,
+                position: position,
+                title: title,
+                animation: google.maps.Animation.DROP,
+                id: i
+            });
+            console.log("searchedForText: " + searchedForText);
 
 
-        fetch(`https://api.unsplash.com/search/photos?page=1&query=${searchedForText}`, {
+
+            fetch(`https://api.unsplash.com/search/photos?page=1&query=${searchedForText}`, {
             headers: {
                 Authorization: 'Client-ID 4f1bbee00a76cff5bcc600b39b6895819ad62cf89eed2147f567dc2cd681a21b'
             }
-        }).then(response => response.json())
-        .then(function(myJason){
+            }).then(response => response.json())
+            .then(function(myJason){
+                console.log("response: " + myJason);
+                var pictureUrl = myJason.results[0].urls.small;
+                var pictureAuthor = myJason.results[0].user.name;
+                var pictureData = {url: pictureUrl, author: pictureAuthor};
+                console.log("pictureData: " + pictureData);
+                marker.pictureUrl = pictureData.url;
+            })
+            .catch(e => requestError(e, 'image'));
 
-            var pictureUrl = myJason.results[0].urls.small;
-            var pictureAuthor = myJason.results[0].user.name;
-            var pictureData = {url: pictureUrl, author: pictureAuthor};
+            function requestError(e, part) {
+                console.log(e);
+            }  
 
-            console.log("pictureData: " + pictureData);
+            // Push the marker to our array of markers.
+            markers.push(marker);
+            // Create an onclick event to open an infowindow at each marker.
+            marker.addListener('click', function() {
+                var myMarker = this; 
+                populateInfoWindow(this, largeInfowindow);
+                this.setAnimation(google.maps.Animation.BOUNCE);
+                setTimeout(function(){
+                    myMarker.setAnimation(null);
+                },1300);
+            });
+        }
+        
+        makeMarker();
 
-            // return pictureData;
-
-
-        })
-        .catch(e => requestError(e, 'image'));
-
-        // }
-
-
-        // console.log("Picture data" + getPictureData());
-
-        // var apiPicture =  getPictureData()
-        console.log("apiPicture: " + apiPicture);
-
-
-
-        function requestError(e, part) {
-            console.log(e);
-            // responseContainer.insertAdjacentHTML('beforeend', `<p class="network-warning">Oh no! There was an error making a request for the ${part}.</p>`);
-        }  
-
-
-        var marker = new google.maps.Marker({
-            map: map,
-            position: position,
-            title: title,
-            animation: google.maps.Animation.DROP,
-            id: i,
-            pictureUrl: apiPicture.url
-        });
-        // Push the marker to our array of markers.
-        markers.push(marker);
-        // Create an onclick event to open an infowindow at each marker.
-        marker.addListener('click', function() {
-            var myMarker = this; 
-            populateInfoWindow(this, largeInfowindow);
-            this.setAnimation(google.maps.Animation.BOUNCE);
-            setTimeout(function(){
-                myMarker.setAnimation(null);
-            },1300);
-        });
         bounds.extend(markers[i].position);
 
     }
