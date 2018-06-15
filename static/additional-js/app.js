@@ -90,6 +90,7 @@ function initMap() {
                 var pictureAuthor = myJason.results[randomImage].user.name;
                 var pictureData = {url: pictureUrl, author: pictureAuthor};
                 marker.pictureUrl = pictureData.url;
+                marker.pictureAuthor = pictureData.author;
             })
             .catch(e => requestError(e, 'image'));
 
@@ -132,7 +133,8 @@ function populateInfoWindow(marker, infowindow) {
     if (infowindow.marker != marker) {
         infowindow.marker = marker;
 
-        infowindow.setContent('<div>' + marker.title + '</div>' + '<img src="'+ marker.pictureUrl + '" class="ApiPicture">');
+        infowindow.setContent('<div>' + marker.title + '</div>' + '<img src="'+ marker.pictureUrl + '" class="ApiPicture">'
+            + '<div>Picture by ' + marker.pictureAuthor + '</div>');
         infowindow.open(map, marker);
         // Make sure the marker property is cleared if the infowindow is closed.
         infowindow.addListener('closeclick',function(){
