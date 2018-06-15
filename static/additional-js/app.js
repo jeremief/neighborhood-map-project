@@ -78,9 +78,6 @@ function initMap() {
                 animation: google.maps.Animation.DROP,
                 id: i
             });
-            console.log("searchedForText: " + searchedForText);
-
-
 
             fetch(`https://api.unsplash.com/search/photos?page=1&query=${searchedForText}`, {
             headers: {
@@ -88,11 +85,10 @@ function initMap() {
             }
             }).then(response => response.json())
             .then(function(myJason){
-                console.log("response: " + myJason);
-                var pictureUrl = myJason.results[0].urls.small;
-                var pictureAuthor = myJason.results[0].user.name;
+                var randomImage = Math.floor((Math.random() * 9) + 0);
+                var pictureUrl = myJason.results[randomImage].urls.small;
+                var pictureAuthor = myJason.results[randomImage].user.name;
                 var pictureData = {url: pictureUrl, author: pictureAuthor};
-                console.log("pictureData: " + pictureData);
                 marker.pictureUrl = pictureData.url;
             })
             .catch(e => requestError(e, 'image'));
