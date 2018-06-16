@@ -85,12 +85,19 @@ function initMap() {
             }
             }).then(response => response.json())
             .then(function(myJason){
-                var randomImage = Math.floor((Math.random() * 9) + 0);
-                var pictureUrl = myJason.results[randomImage].urls.small;
-                var pictureAuthor = myJason.results[randomImage].user.name;
-                var pictureData = {url: pictureUrl, author: pictureAuthor};
-                marker.pictureUrl = pictureData.url;
-                marker.pictureAuthor = pictureData.author;
+                if (myJason && myJason.results && myJason.results[0]){
+                    // The unsplash api returns 10 pictures. Choose one at random
+                    var randomImage = Math.floor((Math.random() * 9) + 0);
+                    // Add the picture data to the marker
+                    var pictureUrl = myJason.results[randomImage].urls.small;
+                    var pictureAuthor = myJason.results[randomImage].user.name;
+                    var pictureData = {url: pictureUrl, author: pictureAuthor};
+                    marker.pictureUrl = pictureData.url;
+                    marker.pictureAuthor = pictureData.author;
+                    }
+                else {
+                    marker.pictureUrl = "./static/images/icon-no-image.png";
+                }
             })
             .catch(e => requestError(e, 'image'));
 
@@ -133,8 +140,15 @@ function populateInfoWindow(marker, infowindow) {
     if (infowindow.marker != marker) {
         infowindow.marker = marker;
 
-        infowindow.setContent('<div>' + marker.title + '</div>' + '<img src="'+ marker.pictureUrl + '" class="ApiPicture">'
-            + '<div>Picture by ' + marker.pictureAuthor + '</div>');
+        if (marker.pictureAuthor){
+            infowindow.setContent('<div>' + marker.title + '</div>' + '<img src="'+ marker.pictureUrl + '" class="ApiPicture">'
+                + '<div>Picture by ' + marker.pictureAuthor + '</div>');
+        } 
+        else {
+            infowindow.setContent('<div>' + marker.title + '</div>' + '<img src="'+ marker.pictureUrl + '" class="ApiPicture">'
+                + '<div>No picture has been found.</div>');
+        }
+
         infowindow.open(map, marker);
         // Make sure the marker property is cleared if the infowindow is closed.
         infowindow.addListener('closeclick',function(){
