@@ -16,7 +16,8 @@ function initMap() {
     // These are the real estate listings that will be shown to the user.
     // Normally we'd have these in a database instead.
     var onLoadLocations = [
-        {title: 'Sydney Opera House', location: {lat: -33.856968, lng: 151.2127686}},
+        {title: 'rthyshsfhdfgjdgjsrtsfh', location: {lat: -33.856968, lng: 151.2127686}},
+        // {title: 'Sydney Opera House', location: {lat: -33.856968, lng: 151.2127686}},
         {title: 'Powerhouse Museum', location: {lat: -33.8785135, lng: 151.1973531}},
         {title: 'Harbour Bridge', location: {lat: -33.8523018, lng: 151.2085984}},
         {title: 'Australian Museum', location: {lat: -33.8522605, lng: 151.1932775}},
@@ -80,10 +81,19 @@ function initMap() {
             });
 
             fetch(`https://api.unsplash.com/search/photos?page=1&query=${searchedForText}`, {
-            headers: {
-                Authorization: 'Client-ID 4f1bbee00a76cff5bcc600b39b6895819ad62cf89eed2147f567dc2cd681a21b'
-            }
-            }).then(response => response.json())
+                headers: {
+                    method:'get',
+                    Authorization: 'Client-ID 4f1bbee00a76cff5bcc600b39b6895819ad62cf89eed2147f567dc2cd681a21b'
+                }
+            })
+            .then(function(response){
+                console.log(response);
+                if (!response.ok) {
+                    marker.errorMessage = '<div>There was an error loading this image.</div>'
+                }
+                return response;
+            })
+            .then(response => response.json())
             .then(function(myJason){
                 if (myJason && myJason.results && myJason.results[0]){
                     // The unsplash api returns 10 pictures. Choose one at random
@@ -99,11 +109,11 @@ function initMap() {
                     marker.pictureUrl = "./static/images/icon-no-image.png";
                 }
             })
-            .catch(e => requestError(e, 'image'));
-
-            function requestError(e, part) {
-                console.log(e);
-            }  
+            // .catch(e => requestError(e));
+            .catch(function requestError(e){
+              console.log(e);
+                marker.errorMessage = '<div>There was a network error.</div>'
+            });
 
             // Push the marker to our array of markers.
             markers.push(marker);
@@ -140,13 +150,19 @@ function populateInfoWindow(marker, infowindow) {
     if (infowindow.marker != marker) {
         infowindow.marker = marker;
 
-        if (marker.pictureAuthor){
-            infowindow.setContent('<div>' + marker.title + '</div>' + '<img src="'+ marker.pictureUrl + '" class="ApiPicture">'
-                + '<div>Picture by ' + marker.pictureAuthor + '</div>');
-        } 
+        if (marker.errorMessage){
+            infowindow.setContent('<div>' + marker.title + '</div>'  + marker.errorMessage);
+        }
         else {
-            infowindow.setContent('<div>' + marker.title + '</div>' + '<img src="'+ marker.pictureUrl + '" class="ApiPicture">'
-                + '<div>No picture has been found.</div>');
+
+            if (marker.pictureAuthor){
+                infowindow.setContent('<div>' + marker.title + '</div>' + '<img src="'+ marker.pictureUrl + '" class="ApiPicture">'
+                    + '<div>Picture by ' + marker.pictureAuthor + '</div>');
+            } 
+            else {
+                infowindow.setContent('<div>' + marker.title + '</div>' + '<img src="'+ marker.pictureUrl + '" class="ApiPicture">'
+                    + '<div>No picture has been found.</div>');
+            }
         }
 
         infowindow.open(map, marker);

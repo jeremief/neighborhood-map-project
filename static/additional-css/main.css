@@ -23,13 +23,6 @@ html, body, .map-container {
 }
 
 
-.error-no-image {
-    background: url(../images/icon-no-image.png) no-repeat 50% top;
-    margin-bottom: 3em;
-    padding-top: 8em;
-    text-align: center;
-}
-
 /*Phone vertical*/
 @media only screen and (max-width: 450px) and (min-width: 300px) and (max-height: 750px){
     .ApiPicture {max-height: 40vw;}
