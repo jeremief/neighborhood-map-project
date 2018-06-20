@@ -15,12 +15,11 @@ function initMap() {
 
     // These are the locations that will be shown to the user.
     var onLoadLocations = [
-        {title: 'rthyshsfhdfgjdgjsrtsfh', location: {lat: -33.856968, lng: 151.2127686}},
-        // {title: 'Sydney Opera House', location: {lat: -33.856968, lng: 151.2127686}},
-        {title: 'Powerhouse Museum', location: {lat: -33.8785135, lng: 151.1973531}},
-        {title: 'Harbour Bridge', location: {lat: -33.8523018, lng: 151.2085984}},
-        {title: 'Australian Museum', location: {lat: -33.8522605, lng: 151.1932775}},
-        {title: 'Taronga Zoo', location: {lat: -33.8435428, lng: 151.2391531}}
+        {title: 'Sydney Opera House', type: 'Interest point', location: {lat: -33.856968, lng: 151.2127686}},
+        {title: 'Powerhouse Museum', type: 'Museum', location: {lat: -33.8785135, lng: 151.1973531}},
+        {title: 'Harbour Bridge', type: 'Interest point', location: {lat: -33.8523018, lng: 151.2085984}},
+        {title: 'Australian Museum', type: 'Museum', location: {lat: -33.8522605, lng: 151.1932775}},
+        {title: 'Taronga Zoo', type: 'Interest point', location: {lat: -33.8435428, lng: 151.2391531}}
     ];
 
 
@@ -36,6 +35,8 @@ function initMap() {
 
         // self will refer to the outer this, i.e. the view model
         var self = this;
+
+        this.availableTypes = ko.observableArray(['All', 'Interest points', 'Museums']);
 
         this.locationList = ko.observableArray([]);
 

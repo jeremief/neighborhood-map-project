@@ -15,11 +15,19 @@
     <body>
         <div class="container-fluid">
             <div class="row">
-                    <div class="col-md-3">
-                        <div data-bind="foreach: locationList">
-                            <p data-bind="text: title, click: $parent.clickMarker"></p>
-                        </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="filt">Filter:</label>
+                        <select class="form-control" id="filt" data-bind="options: availableTypes">
+                            <!-- <option>All</option>
+                            <option>Interest points</option>
+                            <option>Museums</option> -->
+                        </select>
                     </div>
+                    <div data-bind="foreach: locationList">
+                        <p data-bind="text: title, click: $parent.clickMarker"></p>
+                    </div>
+                </div>
                 <div class="col-md-9">
                     <div id="map"></div>
                 </div>
