@@ -13,8 +13,7 @@ function initMap() {
 
     // Model 
 
-    // These are the real estate listings that will be shown to the user.
-    // Normally we'd have these in a database instead.
+    // These are the locations that will be shown to the user.
     var onLoadLocations = [
         {title: 'rthyshsfhdfgjdgjsrtsfh', location: {lat: -33.856968, lng: 151.2127686}},
         // {title: 'Sydney Opera House', location: {lat: -33.856968, lng: 151.2127686}},
@@ -27,7 +26,7 @@ function initMap() {
 
     var Location = function(data){
         this.title = ko.observable(data.title);
-
+        this.id = ko.observable(data.id);
     }
 
 
@@ -40,16 +39,26 @@ function initMap() {
 
         this.locationList = ko.observableArray([]);
 
+        // Building the location list
+        var id = 0;
         onLoadLocations.forEach(function(locItem){
+            locItem.id = id;
             self.locationList.push(new Location(locItem));
+            id++;
         });
         
         this.currentLoc = ko.observable(this.locationList()[0]);
 
 
-        this.setLoc = function(clickedLoc){
-            self.currentLoc(clickedLoc);
+        this.clickMarker = function(clickedLoc){
+            // self.currentLoc(clickedLoc);
+            console.log(this.title());
+            console.log(this.id());
+
         };
+
+        // console.log(this.setLoc);
+
     }
 
     ko.applyBindings(new ViewModel());
@@ -70,7 +79,7 @@ function initMap() {
 
         function makeMarker() {
 
-            console.log("Entering makeMarker")
+            // console.log("Entering makeMarker")
 
             var marker = new google.maps.Marker({
                 map: map,
@@ -109,7 +118,6 @@ function initMap() {
                     marker.pictureUrl = "./static/images/icon-no-image.png";
                 }
             })
-            // .catch(e => requestError(e));
             .catch(function requestError(e){
               console.log(e);
                 marker.errorMessage = '<div>There was a network error.</div>'
@@ -133,11 +141,15 @@ function initMap() {
         bounds.extend(markers[i].position);
 
     }
+            var mev = {
+              // stop: null,
+                latLng: new google.maps.LatLng(-33.8785135, 151.1973531)
+            };
+            google.maps.event.trigger(map, 'click', mev);
     // Extend the boundaries of the map for each marker
     map.fitBounds(bounds);
 }
            
-
 
 
 
@@ -150,13 +162,16 @@ function populateInfoWindow(marker, infowindow) {
     if (infowindow.marker != marker) {
         infowindow.marker = marker;
 
+        // infowindow.id = marker.id;
+
         if (marker.errorMessage){
             infowindow.setContent('<div>' + marker.title + '</div>'  + marker.errorMessage);
         }
         else {
 
             if (marker.pictureAuthor){
-                infowindow.setContent('<div>' + marker.title + '</div>' + '<img src="'+ marker.pictureUrl + '" class="ApiPicture">'
+                // infowindow.setContent('<div>' + marker.title + '</div>' + '<img src="'+ marker.pictureUrl + '" class="ApiPicture">'
+                infowindow.setContent('<div id="' + marker.id + '">'+  marker.title + '</div>' + '<img src="'+ marker.pictureUrl + '" class="ApiPicture">'
                     + '<div>Picture by ' + marker.pictureAuthor + '</div>');
             } 
             else {
