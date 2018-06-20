@@ -51,9 +51,11 @@ function initMap() {
 
 
         this.clickMarker = function(clickedLoc){
-            // self.currentLoc(clickedLoc);
-            console.log(this.title());
-            console.log(this.id());
+            // Get the id of the location (an observable)
+            var i = this.id();
+
+            // https://stackoverflow.com/questions/2730929/how-to-trigger-the-onclick-event-of-a-marker-on-a-google-maps-v3/2731781#2731781
+            google.maps.event.trigger(markers[i], 'click');
 
         };
 
