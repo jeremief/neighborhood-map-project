@@ -51,112 +51,39 @@ function initMap() {
             id++;
         });
 
-        // Starting off with all locations
-        // this.visibleLocations = this.locationList;
         
         this.currentLoc = ko.observable(this.locationList()[0]);
 
         this.activateFilter= function(){
-            // console.log(this.selectedTypes());
-            // console.log(this.locationList());
-            // console.log(this.visibleLocations());
-            // console.log(this.visibleLocations()[0].title());
+
+            function setMapOnAll(map) {
+                for (var i = 0; i < markers.length; i++) {
+                markers[i].setMap(map);
+              }
+            }
+
             this.visibleLocations.removeAll();
-            // console.log(this.visibleLocations());
 
-
-            // function buildVisibleArray(locations, type){
-            //     // console.log('entering builder');
-            //     // console.log(type);
-            //     // console.log(locations[0].type());
-
-            //     if (type == "All") {
-            //         for (var loc of locations){
-            //             self.visibleLocations.push(new Location(loc));
-            //             // this.visibleLocations.push(new Location(loc));
-            //         }
-            //     } else {
-            //         for (var loc of locations){
-            //             if (loc.type() == type) {
-            //                 console.log(loc.title());
-            //                 self.visibleLocations.push(new Location(loc));
-            //                 // this.visibleLocations.push(new Location(loc));
-            //             }
-            //         }
-            //     }
-            // }
-
-            // buildVisibleArray(this.locationList(), this.selectedTypes());
-
-
-            // function buildVisibleArray(locations, type){
-                // console.log('entering builder');
-                // console.log(type);
-                // console.log(locations[0].type());
-
-                if (this.selectedTypes() == "All") {
-                    for (var loc of this.locationList()){
-                        this.visibleLocations.push(new Location(loc));
-                        // this.visibleLocations.push(new Location(loc));
-                    }
-                } else {
-                    for (var loc of this.locationList()){
-                        if (loc.type() == this.selectedTypes()) {
-                            console.log('in visible loop ' + loc.title());
-                            this.visibleLocations.push(loc);
-                            // this.visibleLocations.push(new Location(loc));
-                        }
+            if (this.selectedTypes() == "All") {
+                for (var loc of this.locationList()){
+                    this.visibleLocations.push(new Location(loc));
+                }
+            } else {
+                for (var loc of this.locationList()){
+                    if (loc.type() == this.selectedTypes()) {
+                        console.log('in visible loop ' + loc.title());
+                        this.visibleLocations.push(loc);
                     }
                 }
-            // }
-
-            // buildVisibleArray(this.locationList(), this.selectedTypes());
-
-            console.log(this.visibleLocations()[0].title());
-
+            }
 
             this.visibleIds = ko.observableArray([]);
 
             for (var loc of this.visibleLocations()){
-                // if (loc.type() == this.selectedTypes()) {
-                    // console.log('in visible loop ' + loc.title());
                     this.visibleIds.push(loc.id());
-                    // this.visibleLocations.push(new Location(loc));
                 }
-            // }
 
                 console.log('visibleIds length: ' + this.visibleIds().length);
-
-
-            // function buildVisibleIds(visibleLocs) {
-            //     console.log(visibleLocs[1].id());
-            //     for (var loc of visibleLocs) {
-            //     console.log(loc.id());
-            //         this.visibleIds.push(loc.id());
-            //     }
-            //     console.log('visibleIds: ' + visibleIds);
-            // }
-
-
-            // buildVisibleIds(this.visibleLocations());
-
-            // // Sets the map on all markers in the array.
-            // function setMap(map, visibleArray) {
-            //     for (var j = 0; j < visibleArray().length; j++) {
-            //         var myIndex = visibleArray()[j].id;
-            //         markers[myIndex].setMap(map);
-            //     }   
-            // }
-
-            // setMap(map, this.visibleIds());
-
-            // function setMap(map, visibleArray) {
-            // Sets the map on all markers in the array.
-            function setMapOnAll(map) {
-              for (var i = 0; i < markers.length; i++) {
-                markers[i].setMap(map);
-              }
-            }
 
 
             if (this.selectedTypes() == 'All') {
@@ -174,10 +101,6 @@ function initMap() {
                     markers[myIndex].setMap(map);
                 }   
             }
-            // }
-
-            // setMap(map, this.visibleIds());
-
         }
 
 
@@ -189,10 +112,8 @@ function initMap() {
             google.maps.event.trigger(markers[i], 'click');
 
         };
-
-        // console.log(this.setLoc);
-
     }
+
 
     ko.applyBindings(new ViewModel());
 
@@ -229,7 +150,6 @@ function initMap() {
                 }
             })
             .then(function(response){
-                // console.log(response);
                 if (!response.ok) {
                     marker.errorMessage = '<div>There was an error loading this image.</div>'
                 }
@@ -274,18 +194,10 @@ function initMap() {
         bounds.extend(markers[i].position);
 
     }
-            // var mev = {
-            //   // stop: null,
-            //     latLng: new google.maps.LatLng(-33.8785135, 151.1973531)
-            // };
-            // google.maps.event.trigger(map, 'click', mev);
     // Extend the boundaries of the map for each marker
     map.fitBounds(bounds);
 }
            
-
-
-
 
 // This function populates the infowindow when the marker is clicked. We'll only allow
 // one infowindow which will open at the marker that is clicked, and populate based
@@ -295,15 +207,12 @@ function populateInfoWindow(marker, infowindow) {
     if (infowindow.marker != marker) {
         infowindow.marker = marker;
 
-        // infowindow.id = marker.id;
-
         if (marker.errorMessage){
             infowindow.setContent('<div>' + marker.title + '</div>'  + marker.errorMessage);
         }
         else {
 
             if (marker.pictureAuthor){
-                // infowindow.setContent('<div>' + marker.title + '</div>' + '<img src="'+ marker.pictureUrl + '" class="ApiPicture">'
                 infowindow.setContent('<div id="' + marker.id + '">'+  marker.title + '</div>' + '<img src="'+ marker.pictureUrl + '" class="ApiPicture">'
                     + '<div>Picture by ' + marker.pictureAuthor + '</div>');
             } 
