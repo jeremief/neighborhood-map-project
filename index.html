@@ -20,7 +20,6 @@
                         <label for="filt">Filter:</label>
                         <select class="form-control" id="filt" data-bind="options: availableTypes, value: selectedTypes, event: {change: activateFilter}"></select>
                     </div>
-                    <!-- <div data-bind="foreach: locationList"> -->
                     <div data-bind="foreach: visibleLocations">
                         <p data-bind="text: title, click: $parent.clickMarker"></p>
                     </div>

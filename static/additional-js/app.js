@@ -15,14 +15,14 @@ function initMap() {
 
     // These are the locations that will be shown to the user.
     var onLoadLocations = [
-        {title: 'Sydney Opera House', type: 'Interest point', location: {lat: -33.856968, lng: 151.2127686}},
-        {title: 'Powerhouse Museum', type: 'Museum', location: {lat: -33.8785135, lng: 151.1973531}},
-        {title: 'Harbour Bridge', type: 'Interest point', location: {lat: -33.8523018, lng: 151.2085984}},
-        {title: 'Australian Museum', type: 'Museum', location: {lat: -33.8522605, lng: 151.1932775}},
-        {title: 'Taronga Zoo', type: 'Interest point', location: {lat: -33.8435428, lng: 151.2391531}}
+        {title: 'Sydney Opera House', type: 'Interest points', location: {lat: -33.856968, lng: 151.2127686}},
+        {title: 'Powerhouse Museum', type: 'Museums', location: {lat: -33.8785135, lng: 151.1973531}},
+        {title: 'Harbour Bridge', type: 'Interest points', location: {lat: -33.8523018, lng: 151.2085984}},
+        {title: 'Australian Museum', type: 'Museums', location: {lat: -33.8522605, lng: 151.1932775}},
+        {title: 'Taronga Zoo', type: 'Interest points', location: {lat: -33.8435428, lng: 151.2391531}}
     ];
 
-
+    // This constructor sets up the Location class
     var Location = function(data){
         this.title = ko.observable(data.title);
         this.type = ko.observable(data.type);
@@ -37,13 +37,16 @@ function initMap() {
         // self will refer to the outer this, i.e. the view model
         var self = this;
 
-        this.availableTypes = ko.observableArray(['All', 'Interest point', 'Museum']);
+
+        // Setting up our location types
+        this.availableTypes = ko.observableArray(['All', 'Interest points', 'Museums']);
         this.selectedTypes = ko.observableArray(['All']);
 
+        // Setting up our location lists: full list and visible list
         this.locationList = ko.observableArray([]);
         this.visibleLocations = ko.observableArray([]);
 
-        // Building the location list
+        // Building the full locations list
         var id = 0;
         onLoadLocations.forEach(function(locItem){
             locItem.id = id;
@@ -51,24 +54,28 @@ function initMap() {
             id++;
         });
 
-
-        // creating visible locations
+        // Creating the visible locations list
         for (var loc of this.locationList()){
                 this.visibleLocations.push(loc);
                 }
 
+        // Setting the first location as the current one
         this.currentLoc = ko.observable(this.locationList()[0]);
 
-        this.activateFilter= function(){
 
+        // Function that runs when the filter is used.
+        // It rebuilds the visible locations list based on the filter's values
+        this.activateFilter= function(){
+            // This function defines the addition of markers on the map
             function setMapOnAll(map) {
                 for (var i = 0; i < markers.length; i++) {
                 markers[i].setMap(map);
               }
             }
-
+            // Clearing the visible locations list
             this.visibleLocations.removeAll();
 
+            // Rebuilding the visible locations list
             if (this.selectedTypes() == "All") {
                 for (var loc of this.locationList()){
                     this.visibleLocations.push(loc);
@@ -81,15 +88,15 @@ function initMap() {
                 }
             }
 
+            // Extracting the ids of the locations in the new visible list
             this.visibleIds = ko.observableArray([]);
-
             for (var loc of this.visibleLocations()){
                     this.visibleIds.push(loc.id());
                 }
 
+            // Adding makers based on visible ids
             if (this.selectedTypes() == 'All') {
                 setMapOnAll(map);
-
             } else {
                 setMapOnAll(null);
                 for (var j = 0; j < this.visibleIds().length; j++) {
@@ -99,38 +106,31 @@ function initMap() {
             }
         };
 
-
+        // Function that simulates the clicking of marker when a location is clicked on in the navigation bar
         this.clickMarker = function(clickedLoc){
             // Get the id of the location (an observable)
             var i = this.id();
-
             // https://stackoverflow.com/questions/2730929/how-to-trigger-the-onclick-event-of-a-marker-on-a-google-maps-v3/2731781#2731781
             google.maps.event.trigger(markers[i], 'click');
-
         };
     }
 
-
+    // Apply bindings
     ko.applyBindings(new ViewModel());
 
-
+    // Set up the info window
     var largeInfowindow = new google.maps.InfoWindow();
     var bounds = new google.maps.LatLngBounds();
 
-    // The following group uses the location array to create an array of markers on initialize.
+    // The following for loop iterates through the original location list to create markers
     for (var i = 0; i < onLoadLocations.length; i++) {
         // Get the position from the location array.
         var position = onLoadLocations[i].location;
         var title = onLoadLocations[i].title;
-        // Create a marker per location, and put into markers array.
-
-
         var searchedForText = title;
 
+        // Function that creates a marker
         function makeMarker() {
-
-            // console.log("Entering makeMarker")
-
             var marker = new google.maps.Marker({
                 map: map,
                 position: position,
@@ -139,6 +139,7 @@ function initMap() {
                 id: i
             });
 
+            // Retrieve picture data for the marker asynchronously
             fetch(`https://api.unsplash.com/search/photos?page=1&query=${searchedForText}`, {
                 headers: {
                     method:'get',
@@ -185,6 +186,7 @@ function initMap() {
             });
         }
         
+        // Create marker
         makeMarker();
 
         bounds.extend(markers[i].position);
@@ -203,9 +205,11 @@ function populateInfoWindow(marker, infowindow) {
     if (infowindow.marker != marker) {
         infowindow.marker = marker;
 
+        // Error handling
         if (marker.errorMessage){
             infowindow.setContent('<div>' + marker.title + '</div>'  + marker.errorMessage);
         }
+        // Add picture to marker or handle case where none has been found.
         else {
 
             if (marker.pictureAuthor){
