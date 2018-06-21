@@ -56,7 +56,7 @@ function initMap() {
 
         // Creating the visible locations list
         for (var loc of this.locationList()){
-                this.visibleLocations.push(loc);
+                self.visibleLocations.push(loc);
                 }
 
         // Setting the first location as the current one
@@ -73,41 +73,41 @@ function initMap() {
               }
             }
             // Clearing the visible locations list
-            this.visibleLocations.removeAll();
+            self.visibleLocations.removeAll();
 
             // Rebuilding the visible locations list
-            if (this.selectedTypes() == "All") {
-                for (var loc of this.locationList()){
-                    this.visibleLocations.push(loc);
+            if (self.selectedTypes() == "All") {
+                for (var loc of self.locationList()){
+                    self.visibleLocations.push(loc);
                 }
             } else {
-                for (var loc of this.locationList()){
-                    if (loc.type() == this.selectedTypes()) {
-                        this.visibleLocations.push(loc);
+                for (var loc of self.locationList()){
+                    if (loc.type() == self.selectedTypes()) {
+                        self.visibleLocations.push(loc);
                     }
                 }
             }
 
             // Extracting the ids of the locations in the new visible list
-            this.visibleIds = ko.observableArray([]);
-            for (var loc of this.visibleLocations()){
-                    this.visibleIds.push(loc.id());
+            self.visibleIds = ko.observableArray([]);
+            for (var loc of self.visibleLocations()){
+                    self.visibleIds.push(loc.id());
                 }
 
             // Adding makers based on visible ids
-            if (this.selectedTypes() == 'All') {
+            if (self.selectedTypes() == 'All') {
                 setMapOnAll(map);
             } else {
                 setMapOnAll(null);
-                for (var j = 0; j < this.visibleIds().length; j++) {
-                    var myIndex = this.visibleIds()[j];
+                for (var j = 0; j < self.visibleIds().length; j++) {
+                    var myIndex = self.visibleIds()[j];
                     markers[myIndex].setMap(map);
                 }   
             }
         };
 
         // Function that simulates the clicking of marker when a location is clicked on in the navigation bar
-        this.clickMarker = function(clickedLoc){
+        self.clickMarker = function(clickedLoc){
             // Get the id of the location (an observable)
             var i = this.id();
             // https://stackoverflow.com/questions/2730929/how-to-trigger-the-onclick-event-of-a-marker-on-a-google-maps-v3/2731781#2731781
