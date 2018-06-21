@@ -18,11 +18,7 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label for="filt">Filter:</label>
-                        <select class="form-control" id="filt" data-bind="options: availableTypes">
-                            <!-- <option>All</option>
-                            <option>Interest points</option>
-                            <option>Museums</option> -->
-                        </select>
+                        <select class="form-control" id="filt" data-bind="options: availableTypes, value: selectedTypes, event: {change: activateFilter}"></select>
                     </div>
                     <div data-bind="foreach: locationList">
                         <p data-bind="text: title, click: $parent.clickMarker"></p>

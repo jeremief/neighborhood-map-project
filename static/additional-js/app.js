@@ -25,6 +25,7 @@ function initMap() {
 
     var Location = function(data){
         this.title = ko.observable(data.title);
+        this.type = ko.observable(data.type);
         this.id = ko.observable(data.id);
     }
 
@@ -36,9 +37,11 @@ function initMap() {
         // self will refer to the outer this, i.e. the view model
         var self = this;
 
-        this.availableTypes = ko.observableArray(['All', 'Interest points', 'Museums']);
+        this.availableTypes = ko.observableArray(['All', 'Interest point', 'Museum']);
+        this.selectedTypes = ko.observableArray(['All']);
 
         this.locationList = ko.observableArray([]);
+        this.visibleLocations = ko.observableArray([]);
 
         // Building the location list
         var id = 0;
@@ -47,8 +50,135 @@ function initMap() {
             self.locationList.push(new Location(locItem));
             id++;
         });
+
+        // Starting off with all locations
+        // this.visibleLocations = this.locationList;
         
         this.currentLoc = ko.observable(this.locationList()[0]);
+
+        this.activateFilter= function(){
+            // console.log(this.selectedTypes());
+            // console.log(this.locationList());
+            // console.log(this.visibleLocations());
+            // console.log(this.visibleLocations()[0].title());
+            this.visibleLocations.removeAll();
+            // console.log(this.visibleLocations());
+
+
+            // function buildVisibleArray(locations, type){
+            //     // console.log('entering builder');
+            //     // console.log(type);
+            //     // console.log(locations[0].type());
+
+            //     if (type == "All") {
+            //         for (var loc of locations){
+            //             self.visibleLocations.push(new Location(loc));
+            //             // this.visibleLocations.push(new Location(loc));
+            //         }
+            //     } else {
+            //         for (var loc of locations){
+            //             if (loc.type() == type) {
+            //                 console.log(loc.title());
+            //                 self.visibleLocations.push(new Location(loc));
+            //                 // this.visibleLocations.push(new Location(loc));
+            //             }
+            //         }
+            //     }
+            // }
+
+            // buildVisibleArray(this.locationList(), this.selectedTypes());
+
+
+            // function buildVisibleArray(locations, type){
+                // console.log('entering builder');
+                // console.log(type);
+                // console.log(locations[0].type());
+
+                if (this.selectedTypes() == "All") {
+                    for (var loc of this.locationList()){
+                        this.visibleLocations.push(new Location(loc));
+                        // this.visibleLocations.push(new Location(loc));
+                    }
+                } else {
+                    for (var loc of this.locationList()){
+                        if (loc.type() == this.selectedTypes()) {
+                            console.log('in visible loop ' + loc.title());
+                            this.visibleLocations.push(loc);
+                            // this.visibleLocations.push(new Location(loc));
+                        }
+                    }
+                }
+            // }
+
+            // buildVisibleArray(this.locationList(), this.selectedTypes());
+
+            console.log(this.visibleLocations()[0].title());
+
+
+            this.visibleIds = ko.observableArray([]);
+
+            for (var loc of this.visibleLocations()){
+                // if (loc.type() == this.selectedTypes()) {
+                    // console.log('in visible loop ' + loc.title());
+                    this.visibleIds.push(loc.id());
+                    // this.visibleLocations.push(new Location(loc));
+                }
+            // }
+
+                console.log('visibleIds length: ' + this.visibleIds().length);
+
+
+            // function buildVisibleIds(visibleLocs) {
+            //     console.log(visibleLocs[1].id());
+            //     for (var loc of visibleLocs) {
+            //     console.log(loc.id());
+            //         this.visibleIds.push(loc.id());
+            //     }
+            //     console.log('visibleIds: ' + visibleIds);
+            // }
+
+
+            // buildVisibleIds(this.visibleLocations());
+
+            // // Sets the map on all markers in the array.
+            // function setMap(map, visibleArray) {
+            //     for (var j = 0; j < visibleArray().length; j++) {
+            //         var myIndex = visibleArray()[j].id;
+            //         markers[myIndex].setMap(map);
+            //     }   
+            // }
+
+            // setMap(map, this.visibleIds());
+
+            // function setMap(map, visibleArray) {
+            // Sets the map on all markers in the array.
+            function setMapOnAll(map) {
+              for (var i = 0; i < markers.length; i++) {
+                markers[i].setMap(map);
+              }
+            }
+
+
+            if (this.selectedTypes() == 'All') {
+                setMapOnAll(map);
+
+            } else {
+
+
+                    setMapOnAll(null);
+                
+                for (var j = 0; j < this.visibleIds().length; j++) {
+                    console.log('visibleIds: ' + this.visibleIds()[1]);
+                    var myIndex = this.visibleIds()[j];
+                    console.log(myIndex);
+                    markers[myIndex].setMap(map);
+                }   
+            }
+            // }
+
+            // setMap(map, this.visibleIds());
+
+        }
 
 
         this.clickMarker = function(clickedLoc){
@@ -99,7 +229,7 @@ function initMap() {
                 }
             })
             .then(function(response){
-                console.log(response);
+                // console.log(response);
                 if (!response.ok) {
                     marker.errorMessage = '<div>There was an error loading this image.</div>'
                 }
@@ -144,11 +274,11 @@ function initMap() {
         bounds.extend(markers[i].position);
 
     }
-            var mev = {
-              // stop: null,
-                latLng: new google.maps.LatLng(-33.8785135, 151.1973531)
-            };
-            google.maps.event.trigger(map, 'click', mev);
+            // var mev = {
+            //   // stop: null,
+            //     latLng: new google.maps.LatLng(-33.8785135, 151.1973531)
+            // };
+            // google.maps.event.trigger(map, 'click', mev);
     // Extend the boundaries of the map for each marker
     map.fitBounds(bounds);
 }
