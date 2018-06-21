@@ -51,7 +51,12 @@ function initMap() {
             id++;
         });
 
-        
+
+        // creating visible locations
+        for (var loc of this.locationList()){
+                this.visibleLocations.push(loc);
+                }
+
         this.currentLoc = ko.observable(this.locationList()[0]);
 
         this.activateFilter= function(){
@@ -66,12 +71,11 @@ function initMap() {
 
             if (this.selectedTypes() == "All") {
                 for (var loc of this.locationList()){
-                    this.visibleLocations.push(new Location(loc));
+                    this.visibleLocations.push(loc);
                 }
             } else {
                 for (var loc of this.locationList()){
                     if (loc.type() == this.selectedTypes()) {
-                        console.log('in visible loop ' + loc.title());
                         this.visibleLocations.push(loc);
                     }
                 }
@@ -83,25 +87,17 @@ function initMap() {
                     this.visibleIds.push(loc.id());
                 }
 
-                console.log('visibleIds length: ' + this.visibleIds().length);
-
-
             if (this.selectedTypes() == 'All') {
                 setMapOnAll(map);
 
             } else {
-
-
-                    setMapOnAll(null);
-                
+                setMapOnAll(null);
                 for (var j = 0; j < this.visibleIds().length; j++) {
-                    console.log('visibleIds: ' + this.visibleIds()[1]);
                     var myIndex = this.visibleIds()[j];
-                    console.log(myIndex);
                     markers[myIndex].setMap(map);
                 }   
             }
-        }
+        };
 
 
         this.clickMarker = function(clickedLoc){
