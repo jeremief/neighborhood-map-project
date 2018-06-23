@@ -55,8 +55,8 @@ html, body {
     }
 }
 
-/*iPhone X vertical*/
-@media only screen and (max-width: 375px) and (min-width: 370px) and (max-height: 812px){
+/*iPhone X  and Pixel 2L vertical*/
+@media only screen and (max-width: 420px) and (min-width: 370px) and (max-height: 830px){
     
     .ApiPicture {
         max-height: 40vw;
@@ -68,8 +68,8 @@ html, body {
     }
 }
 
-/*iPhone X horizontal*/
-@media only screen and (max-width: 812px) and (min-width: 810px) and (max-height: 375px) {
+/*iPhone X and Pixel 2L horizontal*/
+@media only screen and (max-width: 830px) and (min-width: 810px) and (max-height: 420px) {
     
     .ApiPicture {
         max-height: 20vw;
