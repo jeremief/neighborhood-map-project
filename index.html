@@ -30,7 +30,7 @@
                     <div href="javascript:void(0)" class="closebtn hidden-on-desktop" onclick="closeNav()">&times;</div>
                     <span class="hidden-on-desktop" onclick="openNav()">open</span>
                     <div data-bind="foreach: visibleLocations">
-                        <p data-bind="text: title, click: $parent.clickMarker"></p>
+                        <p data-bind="text: title, click: $parent.clickMarker" onclick="closeNav()"></p>
                     </div>
                 </div>
                 <!-- <div class="col-md-9"> -->
