@@ -62,7 +62,8 @@ html, body {
         /*width: 0; */
         position: fixed; /* Stay in place */
         z-index: 1; /* Stay on top */
-        top: 0; /* Stay at the top */
+        /*top: 0; */
+        /*top: 13vw;*/
         left: 0;
         background-color: white;  
         /*overflow-x: hidden;  Disable horizontal scroll */
@@ -113,6 +114,10 @@ html, body {
     height: 12vw;
     font-size: 2em;
     }
+
+    .sidenav {
+        top: 23vw;
+    }
 }
 
 /*Phone horizontal*/
@@ -125,6 +130,10 @@ html, body {
     .top-title {
     height: 10vw;
     font-size: 3em;
+    }
+
+    .sidenav {
+        top: 16.3vw;
     }
 }
 
@@ -139,6 +148,10 @@ html, body {
     height: 12vw;
     font-size: 2em;
     }
+
+    .sidenav {
+        top: 10vw;
+    }
 }
 
 /*iPhone X and Pixel 2L horizontal*/
@@ -151,6 +164,10 @@ html, body {
     .top-title {
     height: 8vw;
     font-size: 3em;
+    }
+
+    .sidenav {
+        top: 10vw;
     }
 }
 
@@ -167,6 +184,10 @@ html, body {
     height: 10vw;
     font-size: 3.5em;
     }
+
+    .sidenav {
+        top: 10vw;
+    }
 }
 
 /*Tablet horizontal*/
@@ -179,6 +200,10 @@ html, body {
     .top-title {
     height: 8vw;
     font-size: 3.5em;
+    }
+
+    .sidenav {
+        top: 10vw;
     }
 }
 
