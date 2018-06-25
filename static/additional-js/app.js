@@ -235,7 +235,7 @@ function toggleSideNav(){
 }
 
 $("#hamburger").click(function() {
-  $("#mySidenav").toggleClass( "open" );
+    toggleSideNav();
 });
 
 
