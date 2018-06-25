@@ -19,13 +19,18 @@ html, body {
     max-height: 10vw;
 }
 
+:root {
+    --primary-color: #D041F3;
+    --secondary-color: #E58AFD;
+}
+
 .top-title {
     height: 7vw;
     /*max-height: 10vw;*/
     font-size: 6em;
     font-family: 'Inconsolata', monospace;
-    color: #E58AFD;
-    background-color: #D041F3;
+    color: var(--secondary-color);
+    background-color: var(--primary-color);
     text-align: center;
     font-style: italic;
 }
@@ -47,7 +52,7 @@ html, body {
     .hamburger-bar {
         width: 35px;
         height: 5px;
-        background-color: #D041F3;
+        background-color: var(--primary-color);
         margin: 6px 0;
     }
 
