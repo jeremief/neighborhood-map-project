@@ -18,30 +18,27 @@
             <div class="row">
                 <div class="col-md-12">
                     <h1 class="top-title">Sydney Connection</h1>
+                    <div id="hamburger" class="hidden-on-desktop">
+                        <div class="hamburger-bar"></div>
+                        <div class="hamburger-bar"></div>
+                        <div class="hamburger-bar"></div>
+                    </div>
                 </div>
             </div>
             <div class="row">
-                <!-- <div class="col-md-3"> -->
                 <div class="col-md-3 sidenav" id="mySidenav">
                     <div class="form-group">
                         <label for="filt">Filter:</label>
                         <select class="form-control" id="filt" data-bind="options: availableTypes, value: selectedTypes, event: {change: activateFilter}"></select>
                     </div>
-                    <div href="javascript:void(0)" class="closebtn hidden-on-desktop" onclick="closeNav()">&times;</div>
-                    <span class="hidden-on-desktop" onclick="openNav()">open</span>
                     <div data-bind="foreach: visibleLocations">
-                        <p data-bind="text: title, click: $parent.clickMarker" onclick="closeNav()"></p>
+                        <p data-bind="text: title, click: $parent.clickMarker" onclick="toggleSideNav()"></p>
                     </div>
                 </div>
-                <!-- <div class="col-md-9"> -->
                 <div class="col-md-9" id="main">
                     <div id="map"></div>
                 </div>
             </div>
-            <!-- <div id="response-container"></div> -->
-
-            <!-- Use any element to open the sidenav -->
-        
         <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAozZWzXs7XHWB1sHY3lmS_V43VCKhskVY&v=3&callback=initMap">
         </script>

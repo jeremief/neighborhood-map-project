@@ -30,6 +30,8 @@ html, body {
     font-style: italic;
 }
 
+
+
 .hidden-on-desktop {
     visibility: hidden;
 }
@@ -42,33 +44,30 @@ html, body {
         visibility: visible;
     }
 
+    .hamburger-bar {
+        width: 35px;
+        height: 5px;
+        background-color: #D041F3;
+        margin: 6px 0;
+    }
+
     /* The side navigation menu */
     .sidenav {
         height: 100%; /* 100% Full-height */
-        width: 0; /* 0 width - change this with JavaScript */
+        /*width: 0; */
         position: fixed; /* Stay in place */
         z-index: 1; /* Stay on top */
         top: 0; /* Stay at the top */
         left: 0;
-        background-color: white; /* Black
-        overflow-x: hidden; /* Disable horizontal scroll */
-        padding-top: 60px; /* Place content 60px from the top */
-        transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+        background-color: white;  
+        /*overflow-x: hidden;  Disable horizontal scroll */
+        /*padding-top: 60px;  Place content 60px from the top */
+        transform: translate(-400px, 0);
+        transition: 0.5s ease; 
     }
 
-    /* The navigation menu links */
-    .sidenav a {
-        padding: 8px 8px 8px 32px;
-        text-decoration: none;
-        font-size: 25px;
-        color: #818181;
-        display: block;
-        transition: 0.3s;
-    }
-
-    /* When you mouse over the navigation links, change their color */
-    .sidenav a:hover {
-        color: #f1f1f1;
+    .open {
+        transform: translate(0,0);
     }
 
     /* Position and style the close button (top right corner) */
@@ -108,10 +107,6 @@ html, body {
     height: 12vw;
     font-size: 2em;
     }
-
-    /*.hidden-on-desktop {
-        visibility: visible;
-    }*/
 }
 
 /*Phone horizontal*/
@@ -125,10 +120,6 @@ html, body {
     height: 10vw;
     font-size: 3em;
     }
-
-    /*.hidden-on-desktop {
-        visibility: visible;
-    }*/
 }
 
 /*iPhone X  and Pixel 2L vertical*/
@@ -142,10 +133,6 @@ html, body {
     height: 12vw;
     font-size: 2em;
     }
-
-    /*.hidden-on-desktop {
-        visibility: visible;
-    }*/
 }
 
 /*iPhone X and Pixel 2L horizontal*/
@@ -159,10 +146,6 @@ html, body {
     height: 8vw;
     font-size: 3em;
     }
-
-    /*.hidden-on-desktop {
-        visibility: visible;
-    }*/
 }
 
 
@@ -178,10 +161,6 @@ html, body {
     height: 10vw;
     font-size: 3.5em;
     }
-
-    /*.hidden-on-desktop {
-        visibility: visible;
-    }*/
 }
 
 /*Tablet horizontal*/
@@ -195,9 +174,5 @@ html, body {
     height: 8vw;
     font-size: 3.5em;
     }
-
-    /*.hidden-on-desktop {
-        visibility: visible;
-    }*/
 }
 
