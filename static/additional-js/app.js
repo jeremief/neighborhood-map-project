@@ -196,6 +196,8 @@ function initMap() {
                 var myMarker = this; 
                 populateInfoWindow(this, largeInfowindow);
                 this.setAnimation(google.maps.Animation.BOUNCE);
+                // https://stackoverflow.com/questions/10917648/google-maps-api-v3-recenter-the-map-to-a-marker
+                map.setCenter(myMarker.getPosition());
                 setTimeout(function(){
                     myMarker.setAnimation(null);
                 },1300);
