@@ -3,10 +3,12 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
+    overflow: hidden;
 }
 
 #map {
     height: 45vw;
+    /*height:1vw;*/
 }
 
 .container-fluid,
@@ -14,6 +16,7 @@ html, body {
 .col-md-9 {
     height: 100%;
 }
+
 
 .ApiPicture {
     max-height: 10vw;
@@ -26,7 +29,6 @@ html, body {
 
 .top-title {
     height: 7vw;
-    /*max-height: 10vw;*/
     font-size: 6em;
     font-family: 'Inconsolata', monospace;
     color: var(--secondary-color);
@@ -35,11 +37,18 @@ html, body {
     font-style: italic;
 }
 
+.sidenav {
+    /*top: 0;*/
+    /*bottom: 0;*/
+    /*position: fixed;*/
+}
 
 
 .hidden-on-desktop {
     visibility: hidden;
 }
+
+
 
 /* Phones only */
 @media only screen and (max-width: 830px) and (min-width: 300px) and (max-height: 830px){
@@ -48,6 +57,7 @@ html, body {
     .hidden-on-desktop {
         visibility: visible;
     }
+
 
     .hamburger-bar {
         width: 35px;
@@ -58,17 +68,13 @@ html, body {
 
     /* The side navigation menu */
     .sidenav {
-        height: 100%; /* 100% Full-height */
-        /*width: 0; */
+        height: 100%; 
         position: fixed; /* Stay in place */
         z-index: 1; /* Stay on top */
-        /*top: 0; */
-        /*top: 13vw;*/
         left: 0;
         background-color: white;  
-        /*overflow-x: hidden;  Disable horizontal scroll */
-        /*padding-top: 60px;  Place content 60px from the top */
-        /*transform: translate(-400px, 0);*/
+        overflow-x: hidden;  
+        overflow: auto;
         transform: translate(-100vw, 0);
         transition: 0.5s ease; 
     }
@@ -94,8 +100,10 @@ html, body {
 
     .sidenav {
         top: 23vw;
+        height: 100vw;
     }
 }
+
 
 /*Phone horizontal*/
 @media only screen and (max-width: 820px) and (min-width: 451px) and (max-height: 450px) {
@@ -111,8 +119,11 @@ html, body {
 
     .sidenav {
         top: 16.3vw;
+        height: 40vw;
     }
 }
+
+
 
 /*iPhone X  and Pixel 2L vertical*/
 @media only screen and (max-width: 420px) and (min-width: 370px) and (max-height: 830px){
@@ -131,6 +142,7 @@ html, body {
     }
 }
 
+
 /*iPhone X and Pixel 2L horizontal*/
 @media only screen and (max-width: 830px) and (min-width: 810px) and (max-height: 420px) {
     
@@ -147,6 +159,7 @@ html, body {
         top: 13vw;
         flex: 0 0 100%;
         max-width: 100%
+        /*height: 40vw;*/
     }
 }
 
