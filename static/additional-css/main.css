@@ -22,8 +22,10 @@ html, body {
 }
 
 :root {
-    --primary-color: #D041F3;
-    --secondary-color: #E58AFD;
+    --primary-color: #28607D;
+    --secondary-color: #F6AC10;
+    --primary-background:#E6E6E5FF;
+    --mobile-background:#B3B3B2FF;
 }
 
 .top-title {
@@ -39,9 +41,7 @@ html, body {
 .sidenav {
     height: 45vw;
     overflow: auto;
-    /*top: 0;*/
-    /*bottom: 0;*/
-    /*position: fixed;*/
+    background-color: var(--primary-background);
 }
 
 
@@ -54,6 +54,9 @@ html, body {
 /* Phones only */
 @media only screen and (max-width: 830px) and (min-width: 300px) and (max-height: 830px){
 
+    body {
+        background-color: var(--primary-background);
+    }
 
     .hidden-on-desktop {
         visibility: visible;
@@ -67,17 +70,16 @@ html, body {
         margin: 6px 0;
     }
 
-    /* The side navigation menu */
     .sidenav {
         height: 100%; 
-        position: fixed; /* Stay in place */
-        z-index: 1; /* Stay on top */
+        position: fixed; 
+        z-index: 1; 
         left: 0;
-        background-color: white;  
         overflow-x: hidden;  
         overflow: auto;
         transform: translate(-100vw, 0);
         transition: 0.5s ease; 
+        background-color: var(--mobile-background);
     }
 
     .open {
