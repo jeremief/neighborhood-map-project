@@ -16,10 +16,26 @@ function initMap() {
     // These are the locations that will be shown to the user.
     var onLoadLocations = [
         {title: 'Sydney Opera House', type: 'Interest points', location: {lat: -33.856968, lng: 151.2127686}},
+        {title: 'Sea Life Sydney Aquarium', type: 'Interest points', location: {lat: -33.8695027, lng: 151.1997733}},
+        {title: 'Manly Beach', type: 'Interest points', location: {lat: -33.7964738, lng: 151.2867921}},
+        {title: 'Luna Park Sydney', type: 'Interest points', location: {lat: -33.8476942, lng: 151.2076495}},
+        {title: 'Sydney Olympic Park', type: 'Interest points', location: {lat: -33.8386349, lng: 151.0493947}},
+        {title: 'Sydney Harbour National Park', type: 'Interest points', location: {lat: -33.8429407, lng: 151.2430716}},
+        {title: 'The Star Casino', type: 'Interest points', location: {lat: -33.8679663, lng: 151.1930215}},
+        {title: 'Art Gallery of New South Wales', type: 'Museums', location: {lat: -33.8688037,lng: 151.2152251 }},
+        {title: 'Museum of Sydney', type: 'Museums', location: {lat: -33.8624307,lng: 151.204416 }},
+        {title: 'Hyde Par Barracks Museum', type: 'Museums', location: {lat: -33.8696042,lng: 151.2106387 }},
+        {title: 'Susannah Place Museum', type: 'Museums', location: {lat: -33.8601381,lng: 151.2052211 }},
         {title: 'Powerhouse Museum', type: 'Museums', location: {lat: -33.8785135, lng: 151.1973531}},
+        {title: 'Justice and Police Museum', type: 'Museums', location: {lat: -33.8621697, lng: 151.2100951}},
         {title: 'Harbour Bridge', type: 'Interest points', location: {lat: -33.8523018, lng: 151.2085984}},
         {title: 'Australian Museum', type: 'Museums', location: {lat: -33.8522605, lng: 151.1932775}},
-        {title: 'Taronga Zoo', type: 'Interest points', location: {lat: -33.8435428, lng: 151.2391531}}
+        {title: 'Taronga Zoo', type: 'Interest points', location: {lat: -33.8435428, lng: 151.2391531}},
+        {title: 'Bondi Beach', type: 'Interest points', location: {lat: -33.8923496, lng: 151.2758928}},
+        {title: 'Darling Harbour', type: 'Interest points', location: {lat: -33.8748755, lng: 151.1987113}},
+        {title: 'The Rocks', type: 'Interest points', location: {lat: -33.8587478, lng: 151.2036359}},
+        {title: 'Sydney Tower', type: 'Interest points', location: {lat: -33.8704465, lng: 151.2065713}},
+        {title: 'Sydney Mint', type: 'Interest points', location: {lat: -33.8689869, lng: 151.2105598}}
     ];
 
     // This constructor sets up the Location class
