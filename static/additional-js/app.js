@@ -126,7 +126,6 @@ function initMap() {
         self.clickMarker = function(clickedLoc){
             // Get the id of the location (an observable)
             var i = this.id();
-            // https://stackoverflow.com/questions/2730929/how-to-trigger-the-onclick-event-of-a-marker-on-a-google-maps-v3/2731781#2731781
             google.maps.event.trigger(markers[i], 'click');
         };
     }
@@ -196,7 +195,6 @@ function initMap() {
                 var myMarker = this; 
                 populateInfoWindow(this, largeInfowindow);
                 this.setAnimation(google.maps.Animation.BOUNCE);
-                // https://stackoverflow.com/questions/10917648/google-maps-api-v3-recenter-the-map-to-a-marker
                 map.setCenter(myMarker.getPosition());
                 setTimeout(function(){
                     myMarker.setAnimation(null);
