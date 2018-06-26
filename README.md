@@ -2,7 +2,7 @@
 
 
 SCREENSHOT
-![Alt text](/pic/path/pic_name.png?raw=true "Hovering text" =WIDTHxHEIGHT)
+![Screenshot of a web app in desktop and mobile version](/static/images/screenshot.png?raw=true "The completed app")
 
 
 ## Table of Contents
