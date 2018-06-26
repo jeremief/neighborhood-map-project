@@ -67,7 +67,7 @@ A lot of research went into this project. Here are the resources that I used to 
 * How to animate markers: [Google documentation](https://developers.google.com/maps/documentation/javascript/examples/marker-animations)
 * How to simulate clicking a marker from the side menu [Stackoverflow thread](https://stackoverflow.com/questions/2730929/how-to-trigger-the-onclick-event-of-a-marker-on-a-google-maps-v3/2731781#2731781)
 * How to recenter the map on a marker when you click on it: [Stackoverflow thread](https://stackoverflow.com/questions/10917648/google-maps-api-v3-recenter-the-map-to-a-marker)
-* Inspiration on how to create a mobile side nav: [Udacitu course](https://classroom.udacity.com/nanodegrees/nd001/parts/d4012321-b4fa-4628-9121-2baf37385560/modules/afa5ca8b-f8dc-4160-83ff-3e5ccc2e1972/lessons/3561069759/concepts/35307193050923)
+* Inspiration on how to create a mobile side nav: [Udacity course](https://classroom.udacity.com/nanodegrees/nd001/parts/d4012321-b4fa-4628-9121-2baf37385560/modules/afa5ca8b-f8dc-4160-83ff-3e5ccc2e1972/lessons/3561069759/concepts/35307193050923)
 * Knockout JS framework: [documentation](http://knockoutjs.com/documentation/introduction.html)
 * Bootstrap framework: [documentation](https://getbootstrap.com/docs/4.1/getting-started/introduction/)
 
