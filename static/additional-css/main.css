@@ -30,7 +30,7 @@ html, body {
 
 .top-title {
     height: 7vw;
-    font-size: 6em;
+    font-size: 6vw;
     font-family: 'Inconsolata', monospace;
     color: var(--secondary-color);
     background-color: var(--primary-color);
