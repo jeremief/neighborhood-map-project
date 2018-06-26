@@ -246,6 +246,7 @@ function populateInfoWindow(marker, infowindow) {
     }
  }
 
+// This part of the code uses jQuery to reveal the sidenav on mobile devices
 function toggleSideNav(){
   $("#mySidenav").toggleClass( "open" );
 }

@@ -27,10 +27,12 @@
             </div>
             <div class="row">
                 <div class="col-md-3 sidenav" id="mySidenav">
-                    <div class="form-group">
-                        <label for="filt">Filter:</label>
-                        <select class="form-control" id="filt" data-bind="options: availableTypes, value: selectedTypes, event: {change: activateFilter}"></select>
-                    </div>
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="filt">Filter </label>
+                            <select class="form-control" id="filt" data-bind="options: availableTypes, value: selectedTypes, event: {change: activateFilter}"></select>
+                        </div>
+                    </form>
                     <div data-bind="foreach: visibleLocations">
                         <p data-bind="text: title, click: $parent.clickMarker" onclick="toggleSideNav()"></p>
                     </div>
