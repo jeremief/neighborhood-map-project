@@ -255,4 +255,8 @@ $("#hamburger").click(function() {
     toggleSideNav();
 });
 
+// Handle error where Google Maps couldn't loadg
+function handleGoogleMapsError(){
+    alert("Google Maps could not load. Please try again later or check your internet connection.")
+}
 
