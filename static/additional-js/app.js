@@ -73,7 +73,7 @@ function initMap() {
         // Creating the visible locations list
         for (var loc of this.locationList()){
                 self.visibleLocations.push(loc);
-                }
+        }
 
         // Setting the first location as the current one
         this.currentLoc = ko.observable(this.locationList()[0]);
